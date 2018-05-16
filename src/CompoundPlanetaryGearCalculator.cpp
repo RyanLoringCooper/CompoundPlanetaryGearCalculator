@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include <cmath>
 #include <vector>
 #include <mutex>
@@ -10,10 +11,26 @@
 
 GtkBuilder *builder;
 
+static const gchar *getEntryData(const char *entryName) {
+	GtkEntry *entry = (GtkEntry *) gtk_builder_get_object(builder, entryName);
+    return gtk_entry_get_text(entry);
+}
+
 static void run(GtkWidget *widget, gpointer data) {
-	GtkEntry *minTeethEntry = (GtkEntry *) gtk_builder_get_object(builder, "minTeethEntry");
-    const gchar *minTeethStr = gtk_entry_get_text(minTeethEntry);
-	std::cout << minTeethStr << std::endl;
+    int minTeeth = atoi(getEntryData("minTeethEntry"));
+    int maxTeeth = atoi(getEntryData("maxTeethEntry"));
+    int minPlanets = atoi(getEntryData("minPlanetsEntry"));
+    int maxPlanets = atoi(getEntryData("maxPlanetsEntry"));
+    double minDiameter = atof(getEntryData("minDiameterEntry"));
+    double maxDiameter = atof(getEntryData("maxDiameterEntry"));
+    double diameterInterval = atof(getEntryData("diameterIntervalEntry"));
+	std::cout << "minTeeth " << minTeeth << std::endl
+        << "maxTeeth " << maxTeeth << std::endl
+        << "minPlanets " << minPlanets << std::endl
+        << "maxPlanets " << maxPlanets << std::endl
+        << "minDiameter " << minDiameter << std::endl
+        << "maxDiameter " << maxDiameter << std::endl
+        << "diameterInterval " << diameterInterval << std::endl;
 }
 
 int main(int argc, char *argv[]) {

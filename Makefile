@@ -1,5 +1,5 @@
 CXX 			:= g++
-CXXFLAGS		:= `pkg-config --cflags gtk+-3.0` -O2
+CXXFLAGS		:= `pkg-config --cflags gtk+-3.0` -g
 LIBS 			:= `pkg-config --libs gtk+-3.0`
 SRC_SUFFIX		:= cpp
 SRCS			:= $(patsubst src/%.$(SRC_SUFFIX), %.$(SRC_SUFFIX), $(wildcard src/*.$(SRC_SUFFIX)))
