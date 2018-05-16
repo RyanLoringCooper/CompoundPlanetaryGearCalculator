@@ -11,7 +11,7 @@ struct GearSet {
 	GearSet();
 	GearSet(const int &sunTeeth, const int &planetTeeth, const int &ringTeeth, const int &numPlanets, const double &sunDiameter, const double &planetDiameter, const double &ringDiameter, const double &diameteralPitch);
 	
-	friend ostream &operator<<(ostream &os, const GearSet &gs);	
+	friend std::ostream &operator<<(std::ostream &os, const GearSet &gs);	
 };
 
 #endif

@@ -4,17 +4,17 @@ LIBS 			:= `pkg-config --libs gtk+-3.0`
 SRC_SUFFIX		:= cpp
 SRCS			:= $(patsubst src/%.$(SRC_SUFFIX), %.$(SRC_SUFFIX), $(wildcard src/*.$(SRC_SUFFIX)))
 OBJ_DIR 		:= obj/
-BUILD_DIR 		:= bin/
-VPATH 			:= src $(OBJ_DIR)
+BIN_DIR 		:= bin/
+VPATH 			:= src:$(OBJ_DIR)
 
-PlanetaryGearCalculator: $(SRC:.$(SRC_SUFFIX)=.o)
-	@mkdir -p $(BUILD_DIR)
-	cp src/UI.glade $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -o $(BUILD_DIR)$@ $(patsubst %.$(SRC_SUFFIX), $(OBJ_DIR)%.o, $(SRCS)) $(LIBS)
-.PHONY: PlanetaryGearCalculator
+CompoundPlanetaryGearCalculator: $(SRCS:.$(SRC_SUFFIX)=.o)
+	@mkdir -p $(BIN_DIR)
+	cp src/UI.glade $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) -o $(BIN_DIR)$@ $(patsubst %.$(SRC_SUFFIX), $(OBJ_DIR)%.o, $(SRCS)) $(LIBS)
+.PHONY: CompoundPlanetaryGearCalculator
 
 clean: 
-	$(RM) -rf $(BUILD_DIR)
+	$(RM) -rf $(BIN_DIR)
 	$(RM) -rf $(OBJ_DIR)
 .PHONY: clean
 

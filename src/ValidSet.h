@@ -11,7 +11,7 @@ struct ValidSet {
 
 	inline double getFinalRatio() const; 
 
-	friend ostream &operator<<(ostream &os, const ValidSet &gs);	
+	friend std::ostream &operator<<(std::ostream &os, const ValidSet &gs);	
 };
 
 #endif

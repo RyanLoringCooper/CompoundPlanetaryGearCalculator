@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <cmath>
 #include "GearCalculator.h"
 
 // should be in mm
@@ -89,7 +90,7 @@ void GearCalculator::numPlanetsThread(const int &numPlanets,const double &minTee
 	}
 }
 
-void GearCalculator::getFirstStages(const double &minTeethSize, const double &diameter) {
+void GearCalculator::diameterThread(const double &minTeethSize, const double &diameter) {
 	int planetRange = maxPlanets-minPlanets+1;
 	std::thread threads[planetRange];
 	for(int numPlanets = minPlanets; numPlanets <= maxPlanets; numPlanets++) {
@@ -98,6 +99,18 @@ void GearCalculator::getFirstStages(const double &minTeethSize, const double &di
 	for(int i = 0; i < planetRange; i++) {
 		threads[i].join();
 	}
+}
+
+void GearCalculator::getFirstStages() {
+    int diameterRange = ceil((maxDiameter-minDiameter)/diameterInterval);
+    int threadIndex = 0;
+    std::thread threads[diameterRange];
+    for(double diameter = minDiameter; diameter <= maxDiameter; diameter += diameterInterval) {
+        threads[threadIndex++] = std::thread(&GearCalculator::diameterThread, this, minTeethSize, diameter);
+    }
+    for(int i = 0; i < diameterRange; i++) {
+        threads[i].join();
+    }
 }
 
 void GearCalculator::findValids(const GearSet &firstStage) {
@@ -121,17 +134,19 @@ void GearCalculator::findValids(const GearSet &firstStage) {
 	}
 }
 
-GearCalculator::GearCalculator(const int &maxSunPlanetTeeth, const int &minTeeth, const int &minPlanets, const int &maxPlanets, const double &minTeethSize, const double &outerDiameter) {
+GearCalculator::GearCalculator(const int &maxSunPlanetTeeth, const int &minTeeth, const int &minPlanets, const int &maxPlanets, const double &minTeethSize, const double &minDiameter, const double &maxDiameter, const double &diameterInterval) {
 	this->maxSunPlanetTeeth = maxSunPlanetTeeth;
 	this->minTeeth = minTeeth;
 	this->minPlanets = minPlanets;
 	this->maxPlanets = maxPlanets;
 	this->minTeethSize = minTeethSize;
-	this->outerDiameter = outerDiameter;
+	this->minDiameter = minDiameter;
+	this->maxDiameter = maxDiameter;
+    this->diameterInterval = diameterInterval;
 }
 
 void GearCalculator::run() {
-	getFirstStages(minTeethSize, diameter);
+	getFirstStages();
 	std::thread threads[firstStages.size()];
 	for(int firstStage = 0; firstStage < firstStages.size(); firstStage++) {
 		threads[firstStage] = std::thread(&GearCalculator::findValids, this, firstStages[firstStage]);
@@ -141,9 +156,9 @@ void GearCalculator::run() {
 	}
 }
 
-void printResults(const std::ostream &os) {
-	os << "Number of valid sets = " << validSet.size() << std::endl;
-	for(int i = 0; i < validSet.size(); i++) {
-		os << validSet[i] << std::endl;
+void GearCalculator::printResults(std::ostream &os) {
+	os << std::string("Number of valid sets = ") << valids.size() << std::endl;
+	for(int i = 0; i < valids.size(); i++) {
+		os << valids[i] << std::endl;
 	}
 }

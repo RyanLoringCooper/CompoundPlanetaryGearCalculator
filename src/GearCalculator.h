@@ -11,7 +11,7 @@ class GearCalculator {
 //	double maxPlanetToSunRatio;
 	int maxSunPlanetTeeth, minTeeth;
 	int minPlanets, maxPlanets;
-	double outerDiameter, minTeethSize;
+	double minDiameter, maxDiameter, minTeethSize, diameterInterval;
 	std::mutex validsMut, firstStagesMut;
 	std::vector<ValidSet> valids;
 	std::vector<GearSet> firstStages;
@@ -40,13 +40,14 @@ class GearCalculator {
 
 	void planetThread(const int &planetTeeth, const int &numPlanets, const int &ringTeeth, const double &diameteralPitch); 
 	void numPlanetsThread(const int &numPlanets,const double &minTeethSize, const double &diameter);
+    void diameterThread(const double &minTeethSize, const double &diameter);
 
-	void getFirstStages(const double &minTeethSize, const double &diameter); 
+	void getFirstStages(); 
 	void findValids(const GearSet &firstStage);
 public:
-	GearCalculator(const int &maxSunPlanetTeeth, const int &minTeeth, const int &minPlanets, const int &maxPlanets, const double &minTeethSize, const double &outerDiameter);
+	GearCalculator(const int &maxSunPlanetTeeth, const int &minTeeth, const int &minPlanets, const int &maxPlanets, const double &minTeethSize, const double &minDiameter, const double &maxDiameter, const double &diameterInterval);
 	void run(); 
-	void printResults(const std::ostream &os);
+	void printResults(std::ostream &os);
 };
 
 #endif

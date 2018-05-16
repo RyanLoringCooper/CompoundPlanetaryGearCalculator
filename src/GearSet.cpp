@@ -20,6 +20,6 @@ std::ostream &operator<<(std::ostream &os, const GearSet &gs) {
 		<< "\tSun Teeth = \t\t\t" << gs.sunTeeth << std::endl
 		<< "\tPlanet Teeth = \t\t" << gs.planetTeeth << std::endl
 		<< "\tRing Teeth = \t\t" << gs.ringTeeth << std::endl
-		<< "\tModule = \t\t\t" << gs.diametralPitch << std::endl;
+		<< "\tModule = \t\t\t" << gs.diameteralPitch << std::endl;
 	return os;
 }
