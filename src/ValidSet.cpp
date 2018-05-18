@@ -10,7 +10,7 @@ ValidSet::ValidSet(const GearSet &first, const GearSet &second) {
 inline double ValidSet::getFinalRatio() const {
     double rhs = (second.planetTeeth*(double)first.ringTeeth)/first.planetTeeth;
     double toppest = second.ringTeeth-rhs;
-    std::cout << toppest << " - " << rhs << std::endl;
+    std::cout << second.ringTeeth << " - " << rhs << std::endl;
 	double bottom = (toppest*(first.sunTeeth/(double)(first.ringTeeth+first.sunTeeth)));
     return bottom;
 }

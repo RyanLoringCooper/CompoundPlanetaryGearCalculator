@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <cmath>
+#include <ctime>
 #include "GearCalculator.h"
 
 // should be in mm
@@ -145,7 +146,7 @@ GearCalculator::GearCalculator(const int &maxSunPlanetTeeth, const int &minTeeth
     this->diameterInterval = diameterInterval;
 }
 
-void GearCalculator::run() {
+void GearCalculator::runParallel() {
 	getFirstStages();
 	std::thread threads[firstStages.size()];
 	for(int firstStage = 0; firstStage < firstStages.size(); firstStage++) {
@@ -154,6 +155,42 @@ void GearCalculator::run() {
 	for(int i = 0; i < firstStages.size(); i++) {
 		threads[i].join();
 	}
+}
+
+void GearCalculator::runSequential() {
+    for(double diameter = minDiameter; diameter <= maxDiameter; diameter += diameterInterval) {
+        for(int numPlanets = minPlanets; numPlanets <= maxPlanets; numPlanets++) {
+            int ringTeeth = getNumTeeth(minTeethSize, diameter);
+            double toothSize = getTeethWidth(ringTeeth, diameter);
+            double diameteralPitch = getDiameteralPitch(ringTeeth, diameter);
+            int teethRange = maxSunPlanetTeeth-minTeeth+1;
+            for(int planetTeeth = minTeeth; planetTeeth <= maxSunPlanetTeeth; planetTeeth++) {
+                double dp = getGearDiameter(planetTeeth, diameteralPitch);
+                for(int sunTeeth = minTeeth; sunTeeth <= maxSunPlanetTeeth; sunTeeth++) {
+                    double ds = getGearDiameter(sunTeeth, diameteralPitch); 
+                    if(planetsHaveSpace(dp, ds, numPlanets)) {
+                        double dr;
+                        if(sunPlanetFitInRing(dp, ds, (dr = getGearDiameter(ringTeeth, diameteralPitch))) && checkGearRelation(sunTeeth, planetTeeth, ringTeeth) && checkSunRingRelation(sunTeeth, ringTeeth, numPlanets)) {
+                            firstStages.emplace_back(sunTeeth, planetTeeth, ringTeeth, numPlanets, ds, dp, dr, diameteralPitch);
+                        }
+                    }
+                }
+            }
+        }
+    }
+	for(int firstStage = 0; firstStage < firstStages.size(); firstStage++) {
+        findValids(firstStages[firstStage]);
+    }
+}
+
+void GearCalculator::run(const bool &threaded) {
+    clock_t start_t = clock();
+    if(threaded) {
+        runParallel();
+    } else {
+        runSequential();
+    }
+    printf("Total time take by CPU: %f\n", (clock()-start_t)/(double)CLOCKS_PER_SEC);
 }
 
 void GearCalculator::printResults(std::ostream &os) {

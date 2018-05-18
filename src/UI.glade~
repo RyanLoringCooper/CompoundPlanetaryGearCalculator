@@ -144,18 +144,6 @@
                 <property name="top_attach">5</property>
               </packing>
             </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="diameterIntervalLabel">
                 <property name="visible">True</property>
@@ -163,9 +151,8 @@
                 <property name="label" translatable="yes">Diameter Interval</property>
               </object>
               <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="left_attach">0</property>
+                <property name="top_attach">6</property>
               </packing>
             </child>
             <child>
@@ -174,11 +161,44 @@
                 <property name="can_focus">True</property>
               </object>
               <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="left_attach">0</property>
+                <property name="top_attach">7</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkLabel" id="minToothSizeLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Minimum Tooth Size</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="minToothSizeEntry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">7</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="runParallelButton">
+            <property name="label" translatable="yes">Run with threads</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -187,8 +207,8 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="runButton">
-            <property name="label" translatable="yes">Run</property>
+          <object class="GtkButton" id="runSequentialButton">
+            <property name="label" translatable="yes">Run without threads</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>

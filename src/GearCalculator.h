@@ -44,9 +44,12 @@ class GearCalculator {
 
 	void getFirstStages(); 
 	void findValids(const GearSet &firstStage);
+
+    void runParallel();
+    void runSequential();
 public:
 	GearCalculator(const int &maxSunPlanetTeeth, const int &minTeeth, const int &minPlanets, const int &maxPlanets, const double &minTeethSize, const double &minDiameter, const double &maxDiameter, const double &diameterInterval);
-	void run(); 
+	void run(const bool &threaded); 
 	void printResults(std::ostream &os);
 };
 
