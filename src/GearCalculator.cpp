@@ -102,7 +102,7 @@ void GearCalculator::diameterThread(const double &minTeethSize, const double &di
 }
 
 void GearCalculator::getFirstStages() {
-    int diameterRange = ceil((maxDiameter-minDiameter)/diameterInterval);
+    int diameterRange = ceil((maxDiameter-minDiameter)/diameterInterval)+1;
     int threadIndex = 0;
     std::thread threads[diameterRange];
     for(double diameter = minDiameter; diameter <= maxDiameter; diameter += diameterInterval) {

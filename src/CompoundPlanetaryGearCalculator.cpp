@@ -21,6 +21,7 @@ static void run(GtkWidget *widget, gpointer data) {
     int maxTeeth = atoi(getEntryData("maxTeethEntry"));
     int minPlanets = atoi(getEntryData("minPlanetsEntry"));
     int maxPlanets = atoi(getEntryData("maxPlanetsEntry"));
+    double minTeethSize = atof(getEntryData("minToothSizeEntry"));
     double minDiameter = atof(getEntryData("minDiameterEntry"));
     double maxDiameter = atof(getEntryData("maxDiameterEntry"));
     double diameterInterval = atof(getEntryData("diameterIntervalEntry"));
@@ -31,6 +32,10 @@ static void run(GtkWidget *widget, gpointer data) {
         << "minDiameter " << minDiameter << std::endl
         << "maxDiameter " << maxDiameter << std::endl
         << "diameterInterval " << diameterInterval << std::endl;
+    GearCalculator gc(maxTeeth, minTeeth, minPlanets, maxPlanets, minTeethSize, minDiameter, maxDiameter, diameterInterval);
+    gc.run();
+    gc.printResults(std::cout);
+
 }
 
 int main(int argc, char *argv[]) {

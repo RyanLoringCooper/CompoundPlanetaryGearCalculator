@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ValidSet.h"
 
 ValidSet::ValidSet(const GearSet &first, const GearSet &second) {
@@ -7,7 +8,11 @@ ValidSet::ValidSet(const GearSet &first, const GearSet &second) {
 }
 
 inline double ValidSet::getFinalRatio() const {
-	return 1.0/((second.ringTeeth-second.planetTeeth*first.ringTeeth/first.planetTeeth)*(first.sunTeeth/(first.ringTeeth+first.sunTeeth)));
+    double rhs = (second.planetTeeth*(double)first.ringTeeth)/first.planetTeeth;
+    double toppest = second.ringTeeth-rhs;
+    std::cout << toppest << " - " << rhs << std::endl;
+	double bottom = (toppest*(first.sunTeeth/(double)(first.ringTeeth+first.sunTeeth)));
+    return bottom;
 }
 	
 std::ostream &operator<<(std::ostream &os, const ValidSet &gs) {

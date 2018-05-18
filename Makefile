@@ -9,7 +9,7 @@ VPATH 			:= src:$(OBJ_DIR)
 
 CompoundPlanetaryGearCalculator: $(SRCS:.$(SRC_SUFFIX)=.o)
 	@mkdir -p $(BIN_DIR)
-	cp src/UI.glade $(BIN_DIR)
+	cp -u src/UI.glade $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) -o $(BIN_DIR)$@ $(patsubst %.$(SRC_SUFFIX), $(OBJ_DIR)%.o, $(SRCS)) $(LIBS)
 .PHONY: CompoundPlanetaryGearCalculator
 
