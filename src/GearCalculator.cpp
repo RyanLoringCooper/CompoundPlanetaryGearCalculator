@@ -122,14 +122,24 @@ void GearCalculator::findValids(const GearSet &firstStage) {
 	ds = firstStage.sunDiameter;
 	dp = firstStage.planetDiameter;
 	for(int s2 = minTeeth; s2 <= maxSunPlanetTeeth; s2++) {
-		for(int p2 = minTeeth; p2 <= maxSunPlanetTeeth; p2++) {
-			m2 = firstStage.diameteralPitch*(s1+p1)/(double)(s2+p2);
-			r2 = (s2+(p2<<1));
-			if(m2*s2 == ds && m2*p2 == dp && isWholeNumber((s2/(r2*firstStage.numPlanets)))) {
-				GearSet secondStage(s2, p2, r2, firstStage.numPlanets, ds, dp, getGearDiameter(r2, m2), m2);
-				validsMut.lock();
-				valids.emplace_back(firstStage, secondStage);
-				validsMut.unlock();
+		if(s2 != s1) {
+			for(int p2 = minTeeth; p2 <= maxSunPlanetTeeth; p2++) {
+				if(p2 != p1) {
+					m2 = firstStage.diameteralPitch*(s1+p1)/((double)(s2+p2));
+					r2 = (s2+(p2<<1));
+					if(m2*s2 == ds && m2*p2 == dp && isWholeNumber((s2/(r2*firstStage.numPlanets)))) {
+						std::cout << "s1 " << s1 << ", "
+							<< "p1 " << p1 << ", "
+							<< "r1 " << firstStage.ringTeeth << "\n"
+							<< "s2 " << s2 << ", "
+							<< "p2 " << p2 << ", "
+							<< "r2 " << r2 << ", " << std::endl;
+						GearSet secondStage(s2, p2, r2, firstStage.numPlanets, ds, dp, getGearDiameter(r2, m2), m2);
+						validsMut.lock();
+						valids.emplace_back(firstStage, secondStage);
+						validsMut.unlock();
+					}
+				}
 			}
 		}
 	}

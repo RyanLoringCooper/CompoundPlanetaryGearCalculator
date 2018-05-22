@@ -9,7 +9,7 @@ struct ValidSet {
 
 	ValidSet(const GearSet &first, const GearSet &second); 
 
-	inline double getFinalRatio() const; 
+	double getFinalRatio(const GearSet &first, const GearSet &second); 
 
 	friend std::ostream &operator<<(std::ostream &os, const ValidSet &gs);	
 };
