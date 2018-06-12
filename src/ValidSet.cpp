@@ -7,7 +7,7 @@ ValidSet::ValidSet(const GearSet &first, const GearSet &second) {
 	this->finalRatio = getFinalRatio(first, second);
 }
 
-double ValidSet::getFinalRatio(const GearSet &first, const GearSet &second) {
+static double ValidSet::getFinalRatio(const GearSet &first, const GearSet &second) {
    	return (1+(first.ringTeeth/((double)first.sunTeeth)))/(1-(second.planetTeeth*first.ringTeeth)/((double)second.ringTeeth*first.planetTeeth));
 }
 	
